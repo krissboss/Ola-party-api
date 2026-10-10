@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ola Party AI Bot</title>
+<style>
+body{font-family:Arial;background:#101522;color:white;margin:0;display:flex;justify-content:center;min-height:100vh}.app{width:100%;max-width:480px;display:flex;flex-direction:column;background:#182033}.head{background:#075e54;padding:20px;font-size:22px;font-weight:bold}.sub{font-size:13px;margin-top:6px}.chat{padding:16px;flex:1}.msg{background:#263449;padding:12px;margin:10px 0;border-radius:12px;overflow-wrap:anywhere}.user{background:#075e54;margin-left:35px}.form{display:flex;padding:12px;gap:8px;background:#202b3d}input{flex:1;min-width:0;padding:13px;border-radius:22px;border:0;font-size:16px}button{border:0;border-radius:22px;padding:12px;background:#16a085;color:white;font-weight:bold}
+</style>
+</head>
+<body><div class="app"><div class="head">🤖 Ola Party AI Bot<div class="sub">ऑनलाइन • हिंदी चैट</div></div><div class="chat" id="chat"><div class="msg">नमस्ते! मैं Ola Party AI Bot हूँ। मुझे कोई मैसेज भेजें।</div></div><form class="form" id="form"><input id="message" placeholder="अपना मैसेज लिखें..." autocomplete="off" required><button>भेजें</button></form></div>
+<script>
+const form=document.getElementById("form"),input=document.getElementById("message"),chat=document.getElementById("chat");form.addEventListener("submit",async e=>{e.preventDefault();const message=input.value.trim();if(!message)return;const u=document.createElement("div");u.className="msg user";u.textContent=message;chat.appendChild(u);input.value="";const b=document.createElement("div");b.className="msg";b.textContent="जवाब आ रहा है...";chat.appendChild(b);try{const r=await fetch("/api/chat?message="+encodeURIComponent(message));if(!r.ok)throw Error("API error");const data=await r.json();b.textContent=data.reply||data.message||"जवाब नहीं मिला।"}catch(err){b.textContent="अभी जवाब नहीं मिल पाया। कृपया दोबारा कोशिश करें।"}chat.scrollTop=chat.scrollHeight;});
+</script></body></html>
